@@ -29,7 +29,12 @@ public class MyBinaryTreeDemo {
         tree.add(90);
         tree.add(84);
         tree.add(86);
-
+        tree.add(89);
+        tree.add(98);
+        tree.add(97);
+        tree.add(99);
+//        tree.add(100);
+//        tree.add(101);
         tree.print();
         System.out.println(tree.nodeCount());
         System.out.println(tree.treeHeight());

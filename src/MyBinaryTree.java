@@ -111,8 +111,6 @@ public class MyBinaryTree {
                 counter++;
                 if (j != Math.pow(2, i) - 1) {
                     printSpace(((space * 2) - 1) * maxDigit);
-                } else {
-                    printSpace((space - 1) * maxDigit);
                 }
             }
 
@@ -137,11 +135,20 @@ public class MyBinaryTree {
                             printSpace(skipB * maxDigit);
                         }
 
-                    } else {
-                        printSpace((2 * (space - flagSpace) * maxDigit));
                     }
                 }
                 counter -= flag;
+                flagSpace-=Math.sqrt(space)/2;
+                ;
+//                if(space>32){
+//                    flagSpace-=6;
+//                }else if(space>16){
+//                    flagSpace-=4;
+//                }else if(space>8){
+//                    flagSpace-=2;
+//                }else if(space>4){
+//                    flagSpace-=1;
+//                }
             }
 
             System.out.println();
@@ -182,9 +189,9 @@ public class MyBinaryTree {
         if (num != null) {
             if (counter % 2 == 1) {
                 printSpace2(maxDigit - 1);
-                System.out.print("/");
+                System.out.print(".");
             } else {
-                System.out.print("\\");
+                System.out.print(".");
                 printSpace2(maxDigit - 1);
             }
         } else {

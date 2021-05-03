@@ -13,16 +13,14 @@ public class MyBinaryTree {
         root = addRecursion(root, value);
     }
 
-    public Node addRecursion(Node current, int value) {
+    private Node addRecursion(Node current, int value) {
         if (current == null) {
             return new Node(value);
         } else {
             if (value < current.value) {
                 current.left = addRecursion(current.left, value);
-
             } else {
                 current.right = addRecursion(current.right, value);
-
             }
         }
         return current;
@@ -34,7 +32,18 @@ public class MyBinaryTree {
         return nodeCount;
     }
 
+    private void countRecursion(Node current) {
+        if (current == null) {
+            return;
+        } else {
+            countRecursion(current.left);
+            countRecursion(current.right);
+        }
+        nodeCount++;
+    }
+
     public int treeHeight() {
+        treeHeight = 0;
         treeHeightRecursion(root, 0);
         return treeHeight;
     }
@@ -49,16 +58,6 @@ public class MyBinaryTree {
             treeHeightRecursion(current.left, height);
             treeHeightRecursion(current.right, height);
         }
-    }
-
-    public void countRecursion(Node current) {
-        if (current == null) {
-            return;
-        } else {
-            countRecursion(current.left);
-            countRecursion(current.right);
-        }
-        nodeCount++;
     }
 
     public void print() {
@@ -114,7 +113,6 @@ public class MyBinaryTree {
                 }
             }
 
-
             for (int flagSpace = space - 1; flagSpace >= space / 2; flagSpace--) {
                 System.out.println();
                 flag = 0;
@@ -128,29 +126,20 @@ public class MyBinaryTree {
                     flag++;
                     if (j != Math.pow(2, i + 1) - 1) {
                         int skipA = 2 * (space - flagSpace) - 1;
-                        int skipB = ((space * 2) - 1)-skipA-1;
+                        int skipB = ((space * 2) - 1) - skipA - 1;
                         if (j % 2 == 0) {
                             printSpace(skipA * maxDigit);
                         } else {
                             printSpace(skipB * maxDigit);
                         }
-
                     }
                 }
                 counter -= flag;
-                flagSpace-=Math.sqrt(space)/2;
-                ;
-//                if(space>32){
-//                    flagSpace-=6;
-//                }else if(space>16){
-//                    flagSpace-=4;
-//                }else if(space>8){
-//                    flagSpace-=2;
-//                }else if(space>4){
-//                    flagSpace-=1;
-//                }
-            }
+                if (space > 4) {
+                    flagSpace -= Math.floor((float) space * 0.1);
+                }
 
+            }
             System.out.println();
         }
     }
@@ -168,13 +157,13 @@ public class MyBinaryTree {
             int post = maxDigit - space - pre;
 
             if (counter % 2 == 0) {
-                printSpace2(pre);
+                printSpace(pre);
                 System.out.print(num);
-                printSpace2(post);
+                printSpace(post);
             } else {
-                printSpace2(post);
+                printSpace(post);
                 System.out.print(num);
-                printSpace2(pre);
+                printSpace(pre);
             }
 
         } else {
@@ -187,12 +176,12 @@ public class MyBinaryTree {
     public void printLines(MyLinkedList list, int counter) {
         Integer num = list.get(counter);
         if (num != null) {
-            if (counter % 2 == 1) {
-                printSpace2(maxDigit - 1);
+            if (counter % 2 == 0) {
                 System.out.print(".");
+                printSpace(maxDigit - 1);
             } else {
+                printSpace(maxDigit - 1);
                 System.out.print(".");
-                printSpace2(maxDigit - 1);
             }
         } else {
             for (int i = 0; i < maxDigit; i++) {
@@ -202,12 +191,6 @@ public class MyBinaryTree {
     }
 
     public void printSpace(int count) {
-        for (int i = 0; i < count; i++) {
-            System.out.print(" ");
-        }
-    }
-
-    public void printSpace2(int count) {
         for (int i = 0; i < count; i++) {
             System.out.print(" ");
         }

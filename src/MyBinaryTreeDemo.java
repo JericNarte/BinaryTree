@@ -36,8 +36,8 @@ public class MyBinaryTreeDemo {
         tree.add(8);
         tree.add(13);
 //        tree.add(99);
-        tree.print();
-        System.out.println(tree.nodeCount());
+        tree.PrintTree();
+        System.out.println(tree.CountNodes());
         System.out.println(tree.treeHeight());
         System.out.println("> Program Ended");
     }

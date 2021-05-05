@@ -1,6 +1,5 @@
 public class MyBinaryTree {
     Node root;
-    int[] list;
     int nodeCount;
     int treeHeight;
     int maxDigit = 2;
@@ -26,7 +25,7 @@ public class MyBinaryTree {
         return current;
     }
 
-    public int nodeCount() {
+    public int CountNodes() {
         nodeCount = 0;
         countRecursion(root);
         return nodeCount;
@@ -60,7 +59,7 @@ public class MyBinaryTree {
         }
     }
 
-    public void print() {
+    public void PrintTree() {
         treeHeight = treeHeight();
         int maxNode = (int) Math.pow(2, treeHeight);
         MyQueue queue = new MyQueue();
@@ -70,6 +69,9 @@ public class MyBinaryTree {
     }
 
     public MyLinkedList levelTraversal(MyQueue queue, MyLinkedList list, int maxNode) {
+        if(root==null){
+            return null;
+        }
         queue.enqueue(root.value, root);
         for (int i = 0; i < maxNode; i++) {
             try {

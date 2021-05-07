@@ -1,5 +1,5 @@
 public class Node {
-    int value;
+    char value;
     Node left;
     Node right;
 
@@ -8,12 +8,12 @@ public class Node {
         this.right = null;
     }
 
-    Node(int value) {
+    Node(char value) {
         this.value = value;
         this.left = null;
         this.right = null;
     }
-    Node(int value, Node node) {
+    Node(char value, Node node) {
         this.value = value;
         this.left = null;
         this.right = null;

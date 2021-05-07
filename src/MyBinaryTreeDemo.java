@@ -8,10 +8,12 @@ public class MyBinaryTreeDemo {
         System.out.println("> Program Started");
         MyBinaryTreeDemo demo = new MyBinaryTreeDemo();
         demo.initializeMenu();
+
         System.out.println("> Program Ended");
     }
 
     public void initializeMenu() {
+//        tree.insert(new char[]{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'b', 'c', 'd', 'e', 'f', 'g', 'h'});
         boolean run;
         String userInput;
         do {
@@ -61,9 +63,6 @@ public class MyBinaryTreeDemo {
             }
         } while (userInput.equals("-1"));
         inputList = userInput.trim().toCharArray();
-        for (char c: inputList) {
-            System.out.println(c);
-        }
         tree.insert(inputList);
         System.out.printf("%d Elements added to the Binary Tree\n", inputList.length);
     }

@@ -1,27 +1,24 @@
-public class MyQueue {
-    class QNode {
-        int value;
+public class MyQueue<T> {
+    private class QNode {
         QNode next;
-        Node node;
+        T node;
 
-        QNode(int value, Node node) {
-            this.value = value;
+        QNode(T node) {
             this.node = node;
             this.next = null;
-
         }
     }
 
-    QNode front;
-    QNode rear;
+    private QNode front;
+    private QNode rear;
 
     MyQueue() {
         this.front = null;
         this.rear = null;
     }
 
-    public void enqueue(int value, Node node) {
-        QNode temp = new QNode(value, node);
+    public void enqueue(T node) {
+        QNode temp = new QNode(node);
         if (this.front == null) {
             this.rear = temp;
             this.front = temp;
@@ -43,11 +40,11 @@ public class MyQueue {
         }
     }
 
-    public void print() {
-        QNode itr = this.front;
-        while (itr != null) {
-            System.out.print(" -> " + itr.value);
-            itr = itr.next;
-        }
+    public T peek() {
+        return front.node;
+    }
+
+    public boolean isEmpty() {
+        return front == null;
     }
 }

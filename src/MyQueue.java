@@ -7,6 +7,9 @@ public class MyQueue<T> {
             this.node = node;
             this.next = null;
         }
+        public T getNode(){
+            return node;
+        }
     }
 
     private QNode front;
@@ -18,30 +21,33 @@ public class MyQueue<T> {
     }
 
     public void enqueue(T node) {
-        QNode temp = new QNode(node);
-        if (this.front == null) {
-            this.rear = temp;
-            this.front = temp;
+        if(node == null){
             return;
         }
-        this.rear.next = temp;
-        this.rear = temp;
+        QNode temp = new QNode(node);
+        if (front == null) {
+            rear = temp;
+            front = temp;
+            return;
+        }
+        rear.next = temp;
+        rear = temp;
     }
 
     public void dequeue() {
-        if (this.front == null) {
+        if (front == null) {
             return;
         }
         QNode temp = this.front;
-        this.front = this.front.next;
+        front = this.front.next;
         temp = null;
-        if (this.front == null) {
-            this.rear = null;
+        if (front == null) {
+            rear = null;
         }
     }
 
     public T peek() {
-        return front.node;
+        return front.getNode();
     }
 
     public boolean isEmpty() {

@@ -15,8 +15,8 @@ public class MyLinkedList {
 
     MyLinkedList() {
         length = 0;
-        this.head = null;
-        this.tail = null;
+        head = null;
+        tail = null;
     }
 
     public void add(char data) {

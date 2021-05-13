@@ -10,23 +10,26 @@ public class MyBinaryTree {
             this.right = null;
         }
     }
+
     Node root;
-    int nodeCount;
-    int treeHeight;
 
     public MyBinaryTree() {
         root = null;
     }
 
-    public void insert(char[] values) {
-        for (char v : values) {
+    public void insert(char data) {
+        root = insertNode(data, root);
+    }
+
+    public void insert(char[] data) {
+        for (char v : data) {
             root = insertNode(v, root);
         }
     }
 
-    private Node insertNode(char value, Node root) {
+    private Node insertNode(char data, Node root) {
         if (root == null) {
-            return new Node(value);
+            return new Node(data);
         }
         MyQueue<Node> queue = new MyQueue<>();
         queue.enqueue(root);
@@ -35,13 +38,13 @@ public class MyBinaryTree {
             if (current.left != null) {
                 queue.enqueue(current.left);
             } else {
-                current.left = new Node(value);
+                current.left = new Node(data);
                 return root;
             }
             if (current.right != null) {
                 queue.enqueue(current.right);
             } else {
-                current.right = new Node(value);
+                current.right = new Node(data);
                 return root;
             }
             queue.dequeue();
@@ -50,36 +53,38 @@ public class MyBinaryTree {
     }
 
     public int CountNodes() {
-        nodeCount = 0;
-        countNodesRecursion(root);
+        int nodeCount = 0;
+        MyQueue<Node> queue = new MyQueue<Node>();
+        queue.enqueue(root);
+        while (!queue.isEmpty()) {
+            Node current = queue.peek();
+            nodeCount++;
+            if (current.left != null) {
+                queue.enqueue(current.left);
+            }
+            if (current.right != null) {
+                queue.enqueue(current.right);
+            }
+            queue.dequeue();
+        }
         return nodeCount;
     }
 
-    private void countNodesRecursion(Node current) {
-        if (current == null) {
-            return;
-        } else {
-            countNodesRecursion(current.left);
-            countNodesRecursion(current.right);
-        }
-        nodeCount++;
-    }
-
     public int treeHeight() {
-        treeHeight = 0;
-        treeHeightRecursion(root, 0);
-        return treeHeight;
+        return treeHeightRecursion(root);
     }
 
-    public void treeHeightRecursion(Node current, int height) {
+    public int treeHeightRecursion(Node current) {
         if (current == null) {
-            if (height > treeHeight) {
-                treeHeight = height;
-            }
+            return 0;
         } else {
-            height++;
-            treeHeightRecursion(current.left, height);
-            treeHeightRecursion(current.right, height);
+            int left = treeHeightRecursion(current.left);
+            int right = treeHeightRecursion(current.right);
+            if(left>right){
+                return left+1;
+            }else{
+                return right+1;
+            }
         }
     }
 
@@ -129,10 +134,10 @@ public class MyBinaryTree {
     }
 
     public void PrintTree() {
-        treeHeight = treeHeight();
+        int treeHeight = treeHeight();
         MyLinkedList list = new MyLinkedList();
         list = levelTraversal(list);
-        printTree(list);
+        printTree(list, treeHeight);
     }
 
     public MyLinkedList levelTraversal(MyLinkedList list) {
@@ -156,7 +161,7 @@ public class MyBinaryTree {
         return list;
     }
 
-    public void printTree(MyLinkedList list) {
+    public void printTree(MyLinkedList list, int treeHeight) {
         int flag;
         int counter = 0;
         int space = 0;
@@ -168,7 +173,7 @@ public class MyBinaryTree {
                 if (list.length() <= counter) {
                     break;
                 }
-                printValues(list, counter++);
+                printdatas(list, counter++);
                 if (j != Math.pow(2, i) - 1) {
                     printSpace(((space * 2) - 1));
                 }
@@ -201,7 +206,7 @@ public class MyBinaryTree {
         }
     }
 
-    public void printValues(MyLinkedList list, int counter) {
+    public void printdatas(MyLinkedList list, int counter) {
         char num = list.get(counter);
         if (num != ' ') {
             System.out.print(" " + num + " ");

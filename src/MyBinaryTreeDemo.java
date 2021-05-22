@@ -1,11 +1,14 @@
 import java.util.Scanner;
 
 public class MyBinaryTreeDemo {
-    MyBinaryTree tree = new MyBinaryTree();
+    MyBinaryTree<Character> tree = new MyBinaryTree<>();
     Scanner scanner = new Scanner(System.in);
 
+    //Binary Tree's max number of nodes
+    final int SIZE = 30;
+
     public static void main(String[] args) {
-        System.out.println("> Program Started");
+        System.out.println("> Program Started\n");
         MyBinaryTreeDemo demo = new MyBinaryTreeDemo();
         demo.initializeMenu();
         System.out.println("\n> Thank you for using the program.");
@@ -14,7 +17,9 @@ public class MyBinaryTreeDemo {
     public void initializeMenu() {
         boolean run;
         String userInput;
-        System.out.println("Binary Tree (Data type: char)");
+        System.out.println("[Binary Tree]");
+        System.out.println("> Data Type: Char");
+        System.out.println("> Max Nodes: " + SIZE);
 
         do {
             // Print a Menu containing all options
@@ -73,7 +78,14 @@ public class MyBinaryTreeDemo {
 
     public void inputContent() {
         char[] inputList;
+        Character[] finalList;
         String userInput;
+
+        // Only Allow upto SIZE nodes or elements
+        if (tree.countNodes() >= SIZE) {
+            System.out.printf("> The Binary Tree is Full (Max Capacity: %d)\n", SIZE);
+            return;
+        }
 
         // Ask the user to input a character or a series of characters
         // will repeat until a valid input is accepted
@@ -86,13 +98,28 @@ public class MyBinaryTreeDemo {
             }
         } while (userInput.equals("-1"));
 
-        // The program will then send the inputs to the binary tree
+        // Convert the primitive data type char to object Character
         inputList = userInput.trim().toCharArray();
-        tree.insert(inputList);
+        finalList = new Character[inputList.length];
+        for (int i = 0; i < inputList.length; i++) {
+            finalList[i] = inputList[i];
+        }
+
+        // If the input wont exceed the binary tree's capacity
+        // The program will then send the inputs to the binary tree
+        // Else will ask the user for another input
+        if (inputList.length + tree.countNodes() > SIZE) {
+            System.out.println("> Input exceeded Binary Tree's capacity");
+            System.out.printf("> Max Capacity: %d, Current: %d\n\n", SIZE, tree.countNodes());
+            inputContent();
+            return;
+        }
+        tree.insert(finalList);
         System.out.printf("> %d new Elements added to the Binary Tree\n", inputList.length);
     }
 
     public void countNodes() {
+        // Show the total number of nodes/elements inside the Binary Tree
         System.out.printf("> There are %d elements in the Binary Tree\n", tree.countNodes());
     }
 
@@ -100,7 +127,7 @@ public class MyBinaryTreeDemo {
     public String inputProcess(String userInput, String method) {
         // Every user input will undergo checking
         switch (method) {
-            // Input for menu will only accept integer from 1 to 7
+            // Input for menu will only accept integers from 1 to 7 inclusive
             case "menu" -> {
                 userInput = userInput.replaceAll("\\s", "");
                 if (userInput.length() == 1 && Character.isDigit(userInput.charAt(0))) {
@@ -111,7 +138,7 @@ public class MyBinaryTreeDemo {
                 }
                 return "-1";
             }
-            // Input for program termination will only accept {y,Y,n,N}
+            // Input for program termination will only accept a single character {y,Y,n,N}
             case "end" -> {
                 userInput = userInput.replaceAll("\\s", "");
                 if (userInput.length() == 1) {
@@ -121,7 +148,7 @@ public class MyBinaryTreeDemo {
                 }
                 return "-1";
             }
-            // Input for binary tree values will only accept alphabet
+            // Input for the Binary Tree will only accept alphabets
             case "input" -> {
                 String[] list;
                 while (userInput.contains("  ")) {

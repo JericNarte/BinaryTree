@@ -1,18 +1,18 @@
-public class MyBinaryTree {
+public class MyBinaryTree<T> {
     // Binary Tree Node
     private class BTNode {
-        char data;
+        T data;
         BTNode left;
         BTNode right;
 
-        public BTNode(char data) {
+        public BTNode(T data) {
             this.data = data;
             this.left = null;
             this.right = null;
         }
     }
 
-    private MyLinkedList<Character> arr;
+    private MyLinkedList<T> arr;
     private BTNode root;
     private int size;
 
@@ -23,15 +23,15 @@ public class MyBinaryTree {
     }
 
     // Insert a values into the Binary Tree in order level
-    public void insert(char data) {
+    public void insert(T data) {
         arr.add(data);
         size++;
         root = insertNode(arr, root, 0);
     }
 
     // Insert an array of values into the Binary Tree in order level
-    public void insert(char[] data) {
-        for (char v : data) {
+    public void insert(T[] data) {
+        for (T v : data) {
             arr.add(v);
             size++;
         }
@@ -39,7 +39,7 @@ public class MyBinaryTree {
     }
 
     // Create a Binary Tree base on the values of the array
-    private BTNode insertNode(MyLinkedList<Character> arr, BTNode root, int i) {
+    private BTNode insertNode(MyLinkedList<T> arr, BTNode root, int i) {
         if (i < arr.size()) {
             root = new BTNode(arr.get(i));
             root.left = insertNode(arr, root.left, (2 * i) + 1);
@@ -75,7 +75,7 @@ public class MyBinaryTree {
         return ++left;
     }
 
-    // Print the elements inside the Binary Tree in Post-Order
+    // Print the elements inside the Binary Tree in Post-Order Arrangement
     public void postOrder() {
         if (size == 0) {
             System.out.println("> The Binary Tree is Empty.");
@@ -94,7 +94,7 @@ public class MyBinaryTree {
         }
     }
 
-    // Print the elements inside the Binary Tree in Pre-Order
+    // Print the elements inside the Binary Tree in Pre-Order Arrangement
     public void preOrder() {
         if (size == 0) {
             System.out.println("> The Binary Tree is Empty.");
@@ -114,7 +114,7 @@ public class MyBinaryTree {
 
     }
 
-    // Print the elements inside the Binary Tree in In-Order
+    // Print the elements inside the Binary Tree in In-Order Arrangement
     public void inOrder() {
         if (size == 0) {
             System.out.println("> The Binary Tree is Empty.");
@@ -134,6 +134,7 @@ public class MyBinaryTree {
     }
 
     // Print the Binary Tree Model
+    // Only Usable for Characters or Single Digit Integer
     public void PrintTree() {
         if (size == 0) {
             System.out.println("> The Binary Tree is Empty.");
@@ -156,6 +157,7 @@ public class MyBinaryTree {
             }
 
             // No need to print connecting lines for Leaf Nodes
+            System.out.println();
             if (i == treeHeight - 1) break;
 
             // Print a series of connecting dots to each child of a node in the (i)th level of the Binary Tree
@@ -165,7 +167,6 @@ public class MyBinaryTree {
                 int gapOUT = ((tempSpace) * 2) - 1;
 
                 // Print a dot toward each children nodes
-                System.out.println();
                 for (int j = 0; j < Math.pow(2, i + 1); j++) {
                     printSpace((j == 0) ? tempSpace : (counter % 2 == 0) ? gapIN : gapOUT);
                     System.out.print(" . ");
@@ -177,8 +178,9 @@ public class MyBinaryTree {
                 // Control the height between parent and child nodes
                 tempSpace -= Math.floor((float) space * 0.1);
                 counter -= flag;
+                System.out.println();
             }
-            System.out.println();
+
         }
     }
 
@@ -187,8 +189,4 @@ public class MyBinaryTree {
             System.out.print("   ");
         }
     }
-
-
-
-
 }

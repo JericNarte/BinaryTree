@@ -39,6 +39,7 @@ public class MyLinkedList<T> {
         return itr.data;
     }
 
+
     public int size() {
         return size;
     }

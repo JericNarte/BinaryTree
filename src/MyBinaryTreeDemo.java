@@ -17,8 +17,8 @@ public class MyBinaryTreeDemo {
     public void initializeMenu() {
         boolean run;
         String userInput;
-        System.out.println("[Binary Tree]");
-        System.out.println("> Data Type: Char");
+        System.out.println("[ My Binary Tree Demo ]");
+        System.out.println("> Data Type: Character");
         System.out.println("> Max Nodes: " + SIZE);
 
         do {

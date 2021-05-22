@@ -12,11 +12,12 @@ public class MyBinaryTreeDemo {
     }
 
     public void initializeMenu() {
-//        tree.insert(new char[]{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'b', 'c', 'd', 'e', 'f', 'g', 'h'});
         boolean run;
         String userInput;
         System.out.println("Binary Tree (Data type: char)");
+
         do {
+            // Print a Menu containing all options
             System.out.println("\n\t1. Input contents");
             System.out.println("\t2. Count content of tree");
             System.out.println("\t3. Print Tree");
@@ -24,60 +25,58 @@ public class MyBinaryTreeDemo {
             System.out.println("\t5. Print pre-order");
             System.out.println("\t6. Print in-order");
             System.out.println("\t7. Delete Tree\n");
+
+            // Ask the user to choose an option
+            // will repeat until a valid input is accepted
             do {
                 System.out.print("Choose an option: ");
                 userInput = scanner.nextLine();
                 userInput = inputProcess(userInput, "menu");
-                if(userInput.equals("-1")){
+                if (userInput.equals("-1")) {
                     System.out.println("[Invalid Input]");
                 }
             } while (userInput.equals("-1"));
             System.out.println();
+
+            // Run the designated task for each input
             switch (userInput) {
                 case "1" -> inputContent();
                 case "2" -> countNodes();
-                case "3" -> printBinaryTree();
-                case "4" -> {
-                    if (!tree.postOrder()) {
-                        System.out.println("> The Binary Tree is Empty.");
-                    }
-                }
-                case "5" -> {
-                    if (!tree.preOrder()) {
-                        System.out.println("> The Binary Tree is Empty.");
-                    }
-                }
-                case "6" -> {
-                    if (!tree.inOrder()) {
-                        System.out.println("> The Binary Tree is Empty.");
-                    }
-                }
-                case "7" -> {
-                    if (tree.emptyTree()) {
-                        System.out.println("> The Binary Tree is deleted");
-                    }
-                }
+                case "3" -> tree.PrintTree();
+                case "4" -> tree.postOrder();
+                case "5" -> tree.preOrder();
+                case "6" -> tree.inOrder();
+                case "7" -> tree.emptyTree();
                 default -> {
                     System.out.println("ERROR: INVALID INPUT PASSED");
                     return;
                 }
             }
             System.out.println();
+
+            // Ask the user to continue or end the program
+            // will repeat until a valid input is accepted
             do {
                 System.out.print("Do you want to continue? Y or N : ");
                 userInput = scanner.nextLine();
                 userInput = inputProcess(userInput, "end");
-                if(userInput.equals("-1")){
+                if (userInput.equals("-1")) {
                     System.out.println("[Invalid Input]");
                 }
             } while (userInput.equals("-1"));
+
+            //Repeat the process until the users ask the program to stop
             run = userInput.equalsIgnoreCase("Y");
         } while (run);
     }
 
+
     public void inputContent() {
         char[] inputList;
         String userInput;
+
+        // Ask the user to input a character or a series of characters
+        // will repeat until a valid input is accepted
         do {
             System.out.print("Input element(s): ");
             userInput = scanner.nextLine();
@@ -86,23 +85,22 @@ public class MyBinaryTreeDemo {
                 System.out.println("[Invalid Input]");
             }
         } while (userInput.equals("-1"));
+
+        // The program will then send the inputs to the binary tree
         inputList = userInput.trim().toCharArray();
         tree.insert(inputList);
         System.out.printf("> %d new Elements added to the Binary Tree\n", inputList.length);
     }
 
-    public void printBinaryTree() {
-        if (!tree.PrintTree()) {
-            System.out.println("> The Binary Tree is Empty.");
-        }
+    public void countNodes() {
+        System.out.printf("> There are %d elements in the Binary Tree\n", tree.countNodes());
     }
 
-    public void countNodes() {
-        System.out.printf("> There are %d elements in the Binary Tree\n", tree.CountNodes());
-    }
 
     public String inputProcess(String userInput, String method) {
+        // Every user input will undergo checking
         switch (method) {
+            // Input for menu will only accept integer from 1 to 7
             case "menu" -> {
                 userInput = userInput.replaceAll("\\s", "");
                 if (userInput.length() == 1 && Character.isDigit(userInput.charAt(0))) {
@@ -113,6 +111,7 @@ public class MyBinaryTreeDemo {
                 }
                 return "-1";
             }
+            // Input for program termination will only accept {y,Y,n,N}
             case "end" -> {
                 userInput = userInput.replaceAll("\\s", "");
                 if (userInput.length() == 1) {
@@ -122,6 +121,7 @@ public class MyBinaryTreeDemo {
                 }
                 return "-1";
             }
+            // Input for binary tree values will only accept alphabet
             case "input" -> {
                 String[] list;
                 while (userInput.contains("  ")) {
@@ -134,8 +134,8 @@ public class MyBinaryTreeDemo {
                     }
                 }
                 userInput = "";
-                for (int i = 0; i < list.length; i++) {
-                    userInput = userInput.concat(list[i]);
+                for (String s : list) {
+                    userInput = userInput.concat(s);
                 }
                 return userInput;
             }

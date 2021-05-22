@@ -1,224 +1,166 @@
 public class MyBinaryTree {
-    public class Node {
+    private class BTNode {
         char data;
-        Node left;
-        Node right;
+        BTNode left;
+        BTNode right;
 
-        Node(char data) {
+        public BTNode(char data) {
             this.data = data;
             this.left = null;
             this.right = null;
         }
     }
 
-    Node root;
+    private final MyLinkedList<Character> arr;
+    private BTNode root;
+    private int nodeCount;
 
     public MyBinaryTree() {
+        arr = new MyLinkedList<>();
         root = null;
+        nodeCount = 0;
     }
 
     public void insert(char data) {
-        root = insertNode(data, root);
+        arr.add(data);
+        nodeCount++;
+        root = insertNode(arr, root, 0);
+
     }
 
     public void insert(char[] data) {
         for (char v : data) {
-            root = insertNode(v, root);
+            arr.add(v);
+            nodeCount++;
         }
+        root = insertNode(arr, root, 0);
     }
 
-    private Node insertNode(char data, Node root) {
-        if (root == null) {
-            return new Node(data);
-        }
-        MyQueue<Node> queue = new MyQueue<>();
-        queue.enqueue(root);
-        while (!queue.isEmpty()) {
-            Node current = queue.peek();
-            if (current.left != null) {
-                queue.enqueue(current.left);
-            } else {
-                current.left = new Node(data);
-                return root;
-            }
-            if (current.right != null) {
-                queue.enqueue(current.right);
-            } else {
-                current.right = new Node(data);
-                return root;
-            }
-            queue.dequeue();
+    private BTNode insertNode(MyLinkedList<Character> arr, BTNode root, int i) {
+        if (i < arr.length()) {
+            root = new BTNode(arr.get(i));
+            root.left = insertNode(arr, root.left, (2 * i) + 1);
+            root.right = insertNode(arr, root.right, (2 * i) + 2);
         }
         return root;
     }
 
-    public int CountNodes() {
-        int nodeCount = 0;
-        MyQueue<Node> queue = new MyQueue<Node>();
-        queue.enqueue(root);
-        while (!queue.isEmpty()) {
-            Node current = queue.peek();
-            nodeCount++;
-            if (current.left != null) {
-                queue.enqueue(current.left);
-            }
-            if (current.right != null) {
-                queue.enqueue(current.right);
-            }
-            queue.dequeue();
-        }
+    public int countNodes() {
         return nodeCount;
     }
 
-    public boolean emptyTree() {
+    public void emptyTree() {
         root = null;
-        return true;
+        System.out.println("> The Binary Tree is deleted");
     }
 
     public int treeHeight() {
         return treeHeightRecursion(root);
     }
 
-    public int treeHeightRecursion(Node current) {
+    public int treeHeightRecursion(BTNode current) {
         if (current == null) {
             return 0;
-        } else {
-            int left = treeHeightRecursion(current.left);
-            int right = treeHeightRecursion(current.right);
-            if (left > right) {
-                return left + 1;
-            } else {
-                return right + 1;
-            }
         }
+        int left = treeHeightRecursion(current.left);
+        return ++left;
     }
 
-    public boolean postOrder() {
-        if (CountNodes() == 0) {
-            return false;
+    public void postOrder() {
+        if (nodeCount == 0) {
+            System.out.println("> The Binary Tree is Empty.");
+            return;
         }
         System.out.print("Post-Order: ");
         printPostOrder(root);
         System.out.println();
-        return true;
     }
 
-    public boolean preOrder() {
-        if (CountNodes() == 0) {
-            return false;
+    public void preOrder() {
+        if (nodeCount == 0) {
+            System.out.println("> The Binary Tree is Empty.");
+            return;
         }
         System.out.print("Pre-Order: ");
         printPreOrder(root);
         System.out.println();
-        return true;
     }
 
-    public boolean inOrder() {
-        if (CountNodes() == 0) {
-            return false;
+    public void inOrder() {
+        if (nodeCount == 0) {
+            System.out.println("> The Binary Tree is Empty.");
+            return;
         }
         System.out.print("In-Order: ");
         printInOrder(root);
         System.out.println();
-        return true;
     }
 
-    private void printPostOrder(Node current) {
-        if (current == null) {
+    private void printPostOrder(BTNode current) {
+        if (current != null) {
+            printPostOrder(current.left);
+            printPostOrder(current.right);
+            System.out.print(current.data + "  ");
+        }
+    }
+
+    private void printPreOrder(BTNode current) {
+        if (current != null) {
+            System.out.print(current.data + "  ");
+            printPreOrder(current.left);
+            printPreOrder(current.right);
+        }
+
+    }
+
+    private void printInOrder(BTNode current) {
+        if (current != null) {
+            printInOrder(current.left);
+            System.out.print(current.data + "  ");
+            printInOrder(current.right);
+        }
+    }
+
+    public void PrintTree() {
+        if (nodeCount == 0) {
+            System.out.println("> The Binary Tree is Empty.");
             return;
         }
-        printPostOrder(current.left);
-        printPostOrder(current.right);
-        System.out.print(current.data + "  ");
+        print(arr);
     }
 
-    private void printPreOrder(Node current) {
-        if (current == null) {
-            return;
-        }
-        System.out.print(current.data + "  ");
-        printPreOrder(current.left);
-        printPreOrder(current.right);
-    }
-
-    private void printInOrder(Node current) {
-        if (current == null) {
-            return;
-        }
-        printInOrder(current.left);
-        System.out.print(current.data + "  ");
-        printInOrder(current.right);
-    }
-
-    public boolean PrintTree() {
-        if (CountNodes() == 0) {
-            return false;
-        }
-        int treeHeight = treeHeight();
-        MyLinkedList list = new MyLinkedList();
-        list = levelTraversal(list);
-        print(list, treeHeight);
-        return true;
-    }
-
-    private MyLinkedList levelTraversal(MyLinkedList list) {
-        MyQueue<Node> queue = new MyQueue<>();
-        Node current;
-        if (root == null) {
-            return null;
-        }
-        queue.enqueue(root);
-        while (!queue.isEmpty()) {
-            current = queue.peek();
-            list.add(current.data);
-            if (current.left != null) {
-                queue.enqueue(current.left);
-            }
-            if (current.right != null) {
-                queue.enqueue(current.right);
-            }
-            queue.dequeue();
-        }
-        return list;
-    }
-
-    private void print(MyLinkedList list, int treeHeight) {
-        int flag;
+    private void print(MyLinkedList<Character> list) {
         int counter = 0;
-        int space = 0;
-        treeHeight = treeHeight();
+        int treeHeight = treeHeight();
+
         for (int i = 0; i < treeHeight; i++) {
-            space = (int) Math.pow(2, (treeHeight - i)) / 2;
-            printSpace(space);
-            for (int j = 0; j < Math.pow(2, i); j++) {
-                if (list.length() <= counter) {
+            int space = (int) Math.pow(2, (treeHeight - i)) / 2;
+            int gap = (int) Math.pow(2, (treeHeight - i)) - 1;
+            int slots = (int) Math.pow(2, i);
+
+            for (int j = 0; j < slots; j++) {
+                printSpace((j == 0) ? space : gap);
+                System.out.print(" " + list.get(counter++) + " ");
+                if (counter >= list.length()) {
                     break;
                 }
-                printVal(list, counter++);
-                if (j != Math.pow(2, i) - 1) {
-                    printSpace(((space * 2) - 1));
-                }
             }
+            if (i == treeHeight - 1) { break; }
 
             for (int tempSpace = space - 1; tempSpace >= space / 2; tempSpace--) {
                 System.out.println();
                 printSpace(tempSpace);
-                flag = 0;
+                int flag = 0;
                 for (int j = 0; j < Math.pow(2, i + 1); j++) {
-                    if (i == treeHeight - 1) {
-                        break;
-                    }
+                    System.out.print(" . ");
+                    int gapIN = ((space - tempSpace) * 2) - 1;
+                    int gapOUT = ((tempSpace) * 2) - 1;
+                    printSpace((counter % 2 == 1) ? gapIN : gapOUT);
+                    counter++;
+                    flag++;
                     if (list.length() <= counter) {
                         break;
                     }
-                    printLine(list, counter);
-                    if (counter % 2 == 1) {
-                        printSpace(((space - tempSpace) * 2) - 1);
-                    } else {
-                        printSpace(((tempSpace) * 2) - 1);
-                    }
-                    counter++;
-                    flag++;
                 }
                 counter -= flag;
                 tempSpace -= Math.floor((float) space * 0.1);
@@ -227,23 +169,6 @@ public class MyBinaryTree {
         }
     }
 
-    private void printVal(MyLinkedList list, int counter) {
-        char num = list.get(counter);
-        if (num != ' ') {
-            System.out.print(" " + num + " ");
-        } else {
-            System.out.print("   ");
-        }
-    }
-
-    private void printLine(MyLinkedList list, int counter) {
-        char num = list.get(counter);
-        if (num != ' ') {
-            System.out.print(" . ");
-        } else {
-            System.out.print("   ");
-        }
-    }
 
     private void printSpace(int count) {
         for (int i = 0; i < count; i++) {

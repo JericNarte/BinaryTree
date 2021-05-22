@@ -1,9 +1,9 @@
-public class MyLinkedList {
+public class MyLinkedList<T> {
     private class LNode {
-        char data;
+        T data;
         LNode next;
         
-        LNode(char data) {
+        LNode(T data) {
             this.data = data;
             this.next = null;
         }
@@ -19,7 +19,7 @@ public class MyLinkedList {
         tail = null;
     }
 
-    public void add(char data) {
+    public void add(T data) {
         LNode temp = new LNode(data);
         if (head == null) {
             head = temp;
@@ -32,7 +32,7 @@ public class MyLinkedList {
         length++;
     }
 
-    public char get(int index) {
+    public T get(int index) {
         LNode itr = head;
         for (int i = 0; i < index; i++) {
             itr = itr.next;

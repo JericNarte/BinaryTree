@@ -21,15 +21,14 @@ public class MyLinkedList<T> {
 
     public void add(T data) {
         LNode temp = new LNode(data);
+        size++;
         if (head == null) {
             head = temp;
             tail = temp;
-            size++;
             return;
         }
         tail.next = temp;
         tail = temp;
-        size++;
     }
 
     public T get(int index) {
@@ -40,7 +39,7 @@ public class MyLinkedList<T> {
         return itr.data;
     }
 
-    public int length() {
+    public int size() {
         return size;
     }
 }

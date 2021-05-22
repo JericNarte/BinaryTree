@@ -14,18 +14,18 @@ public class MyBinaryTree {
 
     private MyLinkedList<Character> arr;
     private BTNode root;
-    private int nodeCount;
+    private int size;
 
     public MyBinaryTree() {
         arr = new MyLinkedList<>();
         root = null;
-        nodeCount = 0;
+        size = 0;
     }
 
     // Insert a values into the Binary Tree in order level
     public void insert(char data) {
         arr.add(data);
-        nodeCount++;
+        size++;
         root = insertNode(arr, root, 0);
     }
 
@@ -33,14 +33,14 @@ public class MyBinaryTree {
     public void insert(char[] data) {
         for (char v : data) {
             arr.add(v);
-            nodeCount++;
+            size++;
         }
         root = insertNode(arr, root, 0);
     }
 
     // Create a Binary Tree base on the values of the array
     private BTNode insertNode(MyLinkedList<Character> arr, BTNode root, int i) {
-        if (i < arr.length()) {
+        if (i < arr.size()) {
             root = new BTNode(arr.get(i));
             root.left = insertNode(arr, root.left, (2 * i) + 1);
             root.right = insertNode(arr, root.right, (2 * i) + 2);
@@ -52,13 +52,13 @@ public class MyBinaryTree {
     public void emptyTree() {
         arr = new MyLinkedList<>();
         root = null;
-        nodeCount = 0;
+        size = 0;
         System.out.println("> The Binary Tree is deleted");
     }
 
     // Get the number of Nodes or size of the Binary Tree
     public int countNodes() {
-        return nodeCount;
+        return size;
     }
 
     // Get the height of the Binary Tree
@@ -77,7 +77,7 @@ public class MyBinaryTree {
 
     // Print the elements inside the Binary Tree in Post-Order
     public void postOrder() {
-        if (nodeCount == 0) {
+        if (size == 0) {
             System.out.println("> The Binary Tree is Empty.");
             return;
         }
@@ -96,7 +96,7 @@ public class MyBinaryTree {
 
     // Print the elements inside the Binary Tree in Pre-Order
     public void preOrder() {
-        if (nodeCount == 0) {
+        if (size == 0) {
             System.out.println("> The Binary Tree is Empty.");
             return;
         }
@@ -116,7 +116,7 @@ public class MyBinaryTree {
 
     // Print the elements inside the Binary Tree in In-Order
     public void inOrder() {
-        if (nodeCount == 0) {
+        if (size == 0) {
             System.out.println("> The Binary Tree is Empty.");
             return;
         }
@@ -135,7 +135,7 @@ public class MyBinaryTree {
 
     // Print the Binary Tree Model
     public void PrintTree() {
-        if (nodeCount == 0) {
+        if (size == 0) {
             System.out.println("> The Binary Tree is Empty.");
             return;
         }
@@ -152,7 +152,7 @@ public class MyBinaryTree {
             for (int j = 0; j < Math.pow(2, i); j++) {
                 printSpace((j == 0) ? space : gap);
                 System.out.print(" " + arr.get(counter++) + " ");
-                if (counter >= arr.length()) break;
+                if (counter >= arr.size()) break;
             }
 
             // No need to print connecting lines for Leaf Nodes
@@ -171,7 +171,7 @@ public class MyBinaryTree {
                     System.out.print(" . ");
                     counter++;
                     flag++;
-                    if (arr.length() <= counter) break;
+                    if (arr.size() <= counter) break;
                 }
 
                 // Control the height between parent and child nodes

@@ -11,12 +11,12 @@ public class MyLinkedList<T> {
 
     private LNode head;
     private LNode tail;
-    private int length;
+    private int size;
 
     MyLinkedList() {
-        length = 0;
         head = null;
         tail = null;
+        size = 0;
     }
 
     public void add(T data) {
@@ -24,12 +24,12 @@ public class MyLinkedList<T> {
         if (head == null) {
             head = temp;
             tail = temp;
-            length++;
+            size++;
             return;
         }
         tail.next = temp;
         tail = temp;
-        length++;
+        size++;
     }
 
     public T get(int index) {
@@ -41,6 +41,6 @@ public class MyLinkedList<T> {
     }
 
     public int length() {
-        return length;
+        return size;
     }
 }

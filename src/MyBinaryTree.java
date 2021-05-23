@@ -31,8 +31,8 @@ public class MyBinaryTree<T> {
 
     // Insert an array of values into the Binary Tree in order level
     public void insert(T[] data) {
-        for (T v : data) {
-            arr.add(v);
+        for (T c : data) {
+            arr.add(c);
             size++;
         }
         root = insertNode(arr, root, 0);

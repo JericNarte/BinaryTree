@@ -138,6 +138,7 @@ public class MyBinaryTreeDemo {
                 }
                 return "-1";
             }
+
             // Input for program termination will only accept a single character {y,Y,n,N}
             case "end" -> {
                 userInput = userInput.replaceAll("\\s", "");
@@ -148,6 +149,7 @@ public class MyBinaryTreeDemo {
                 }
                 return "-1";
             }
+
             // Input for the Binary Tree will only accept alphabets
             case "input" -> {
                 String[] list;
